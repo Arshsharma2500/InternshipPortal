@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://internshipportal-uu4z.onrender.com'
+export const BASE_URL = 'http://localhost:5000'
