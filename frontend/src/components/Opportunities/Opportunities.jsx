@@ -22,14 +22,16 @@ function Opportunities() {
   }, []);
 
   return (
-    <div className='flex flex-col gap-4'>
-      {opportunities.map((opportunity, index) => (
-        <div key={index}>
-        <Opportunity opportunity={opportunity} />
-        <button className='bg-gray-600 px-4 py-2 rounded text-white'>Apply</button>
+    <div className='flex justify-center items-center min-h-screen px-4'>
+      <div className='w-full md:w-4/6 text-center'>
+        <div className='flex flex-col gap-4 pt-20 items-center'>
+          {opportunities.map((opportunity, index) => (
+            <div key={index} className='w-full'>
+              <Opportunity opportunity={opportunity} />
+            </div>
+          ))}
         </div>
-      ))}
-      
+      </div>
     </div>
   );
 }

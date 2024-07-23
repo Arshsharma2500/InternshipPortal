@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
 import { validateEmail } from '../Utils/Helper';
 import axiosInstance from '../Utils/AxiosInstance';
 import PasswordInput from '../Input/PasswordInput';
@@ -16,6 +16,7 @@ function Register({ history }) {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    alert("Registration successfull");
 
     if(!name){
       setError("Please enter your name");
@@ -32,94 +33,87 @@ function Register({ history }) {
 
     setError("");
 
-    // SignUp API cal
+    // SignUp API call
     try {
       const response = await axiosInstance.post("/api/users", {
         name: name,
         email: email,
         password: password,
-    });
-    //Handle successful registration response
-    if(response.data && response.data.error){
+      });
+      // Handle successful registration response
+      if(response.data && response.data.error){
         setError(response.data.message);
-        return
+        
+      }
+
+      if(response.data && response.data.accessToken){
+        localStorage.setItem("token", response.data.accessToken);
+        
+      }
+
+    } catch(error) {
+      // Handle Login error
+      if(error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+      }
     }
-
-    if(response.data && response.data.accessToken){
-      localStorage.setItem("token",response.data.accessToken)
-      console.log("register successfull");
-      navigate("/");
-      
-    }
-  } catch(error) {
-    //Handle Login error
-    if(error.response && error.response.data && error.response.data.message) {
-      setError(error.response.data.message);
-  }else {
-      setError("An unexpected error occurred. Please try again.");
-  }
-
-  }
-
   };
-  
 
   return (
     <>
       <div className='flex justify-center items-center h-screen bg-gray-300'>
-      <div className='flex flex-col rounded-2xl shadow-2xl shadow-black w-1/4 p-4'>
-                <h1 className='text-xl font-semibold text-center'>
-                SignUp
-                </h1>
+        <div className='flex flex-col rounded-2xl shadow-2xl shadow-black w-1/4 p-4'>
+          <h1 className='text-xl font-semibold text-center'>
+            SignUp
+          </h1>
 
-      <form
-      className='flex flex-col gap-2 w-full'
-      onSubmit={submitHandler}>
+          <form
+            className='flex flex-col gap-2 w-full'
+            onSubmit={submitHandler}>
 
-      <label className='text-left font-serif'>Name</label>
+            <label className='text-left font-serif'>Name</label>
 
-      <input type='text' 
-                    placeholder='Name' 
-                    className='input-box p-2 font-serif text-black border rounded'
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    />
+            <input type='text' 
+              placeholder='Name' 
+              className='input-box p-2 font-serif text-black border rounded'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
       
-      <label className='text-left font-serif'>Email</label>
+            <label className='text-left font-serif'>Email</label>
 
-      <input type='text' 
-                    placeholder='abc@gmail.com' 
-                    className='input-box p-2 font-serif text-black border rounded'
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    />
+            <input type='text' 
+              placeholder='abc@gmail.com' 
+              className='input-box p-2 font-serif text-black border rounded'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
       
-      <label className='text-left font-serif'>Create Password</label>
+            <label className='text-left font-serif'>Create Password</label>
 
-    
-      <PasswordInput
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)} />
+            <PasswordInput
+              value={password}
+              onChange={(e) => setPassword(e.target.value)} />
       
-      {error && <p className='text-red-500 pb-1 text-md'>{error}</p>}
+            {error && <p className='text-red-500 pb-1 text-md'>{error}</p>}
 
-      <button type='submit' 
-                    className="bg-orange-700 p-2 rounded text-white active:bg-orange-800">
-                    Create Account
-                    </button>
+            <button type='submit' 
+              className="bg-gray-600 p-2 rounded text-white active:bg-orange-800">
+              Create Account
+            </button>
       
-        <p>Already have account ?{" "}
-                        <Link to={"/login"} 
-                        className='text-orange-600 underline'>
-                        Login
-                        </Link>
-          </p>
-
-      
-    </form>
-    </div>
-    </div>
-  </>
+            <p>Already have an account?{" "}
+              <Link to={"/login"} 
+                className='text-orange-600 underline'>
+                Login
+              </Link>
+            </p>
+          </form>
+        </div>
+      </div>
+    </>
   );
 }
 

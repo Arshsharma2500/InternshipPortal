@@ -63,7 +63,7 @@ function Dashboard() {
   };
 
   return (
-    <div>
+    <div className='pt-20'>
       {error && <p className='text-red-500'>{error}</p>}
       <form onSubmit={submitHandler} className="flex flex-col gap-3 p-4">
         <input
@@ -101,7 +101,7 @@ function Dashboard() {
           onChange={(e) => setImage(e.target.value)}
           className="input-box p-2 border rounded"
         />
-        <button type="submit" className="bg-orange-700 p-2 rounded text-white active:bg-orange-800">
+        <button type="submit" className="bg-gray-600 p-2 rounded text-white active:bg-orange-800">
           Update
         </button>
       </form>

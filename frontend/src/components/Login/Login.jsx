@@ -73,13 +73,13 @@ function Login() {
           {error && <p className='text-red-500 pb-1 text-md'>{error}</p>}
           <button
             type='submit'
-            className="bg-orange-700 p-2 rounded text-white active:bg-orange-800"
+            className="bg-gray-600 p-2 rounded text-white active:bg-orange-800"
           >
             Login
           </button>
           <p>
             Not registered yet?{" "}
-            <Link to={"/signup"} className='text-orange-600 underline'>
+            <Link to={"/register"} className='text-orange-600 underline'>
               Create an Account
             </Link>
           </p>
