@@ -8,7 +8,7 @@ function Opportunities() {
   useEffect(() => {
     const fetchOpportunities = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/opportunities');
+        const response = await axios.get('https://internshipportal-uu4z.onrender.com/api/opportunities');
         const internshipsMeta = response.data[0].internships_meta;
         
         const details = Object.values(internshipsMeta).flat(); // Flatten the nested array
